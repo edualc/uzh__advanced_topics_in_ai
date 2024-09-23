@@ -1,5 +1,10 @@
-# uzh__advanced_topics_in_ai
-Chatbot implementation for the UZH Advanced Topics in AI course, Fall Semester 2024
+# UZH: Advanced Topics in Artificial Intelligence (ATAI, Fall 2024)
+Course assignment of building a chatbot that answers questions
+
+## Team
+
+- Melih Serin ([melih.serin@uzh.ch](melih.serin@uzh.ch))
+- Claude Lehmann ([claudeolivier.lehmann@uzh.ch](claudeolivier.lehmann@uzh.ch))
 
 
 ## Setup
