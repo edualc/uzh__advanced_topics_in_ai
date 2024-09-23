@@ -11,7 +11,7 @@ Course assignment of building a chatbot that answers questions
 
 ### Setup virtual environment and install dependencies
 
-```
+```bash
 # Create python virtual environment
 python3 -m venv env
 
@@ -45,7 +45,7 @@ print(f"Speakeasy Host: {speakeasy_host}")
 
 When adding additional libraries, update the `requirements.txt` like this:
 
-```
+```bash
 # Install the library you want
 pip install <library>
 
@@ -62,7 +62,7 @@ git push origin master
 
 Assuming you have set up the environment already previously
 
-```
+```bash
 # Activate environment (alternatively use the activate_env.sh bash script)
 source env/bin/activate
 ```
