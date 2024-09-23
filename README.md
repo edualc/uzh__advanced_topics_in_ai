@@ -9,6 +9,8 @@ Course assignment of building a chatbot that answers questions
 
 ## Setup
 
+### Setup virtual environment and install dependencies
+
 ```
 # Create python virtual environment
 python3 -m venv env
@@ -20,7 +22,24 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-Additionally, copy the content of the provided dataset from OLAT to the `./data` directory.
+### Download dataset
+
+Copy the content of the provided dataset from OLAT to the `./data` directory.
+
+### Set environment variables
+
+In order to not have passwords in our github repository, please copy the `template.env` file and call the copy `.env`. Then fill in all the required variables in the `.env` file. We use `python-decouple` to access them in code like this:
+
+```python
+from decouple import Config
+
+config = Config()
+
+# Get UZH_SPEAKEASY_HOST value from .env
+speakeasy_host = config('UZH_SPEAKEASY_HOST')
+
+print(f"Speakeasy Host: {speakeasy_host}")
+```
 
 ### Adding new libraries
 
