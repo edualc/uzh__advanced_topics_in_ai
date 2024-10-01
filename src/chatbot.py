@@ -37,21 +37,35 @@ class Agent:
                         f"- new message #{message.ordinal}: '{message.message}' "
                         f"- {self.get_time()}")
 
-                    import code; code.interact(local=dict(globals(), **locals()))
+                    # import code; code.interact(local=dict(globals(), **locals()))
 
 
                     # Implement your agent here #
-                    if message[message.find("SELECT")+8:message.find("WHERE")-1].find(" ") == -1:
-                        row_names = [message[message.find("SELECT")+8:message.find("WHERE")-1]]
+                    query = message.message
+
+                    if query[query.find("SELECT")+8:query.find("WHERE")-1].find(" ") == -1:
+                        row_names = [query[query.find("SELECT")+8:query.find("WHERE")-1]]
                     else:
-                        row_names = message[message.find("SELECT")+8:message.find("WHERE")-1].replace("?","").split(" ")
-                    qres = self.graph.query(message)
+                        row_names = query[query.find("SELECT")+8:query.find("WHERE")-1].replace("?","").split(" ")
+                    
+                    # Execute query on graph
+                    qres = self.graph.query(query)
+
+                    # Collect answers
+                    # --> Currently, we do not add a LIMIT if there are too many rows returned (user issue)
+                    all_answers = []
                     for row in qres:
-                        answer=[]
+                        answer = []
                         for row_name in row_names:
-                            answer.append(row[row_name])
+                            answer.append(str(row[row_name]))
+
+                        all_answers.append(answer)
+
                     # Send a message to the corresponding chat room using the post_messages method of the room object.
-                    room.post_messages(f"Received your message: '{answer}' ")
+                    formatted_answer = '\n'.join([str(ans) for ans in all_answers])
+                    room.post_messages(f"Received your message:\n{formatted_answer}")
+                    print(f"Answered message with:\n{formatted_answer}")
+
                     # Mark the message as processed, so it will be filtered out when retrieving new messages.
                     room.mark_as_processed(message)
 
@@ -78,7 +92,7 @@ class Agent:
 if __name__ == '__main__':
     print(f"Loading graph")
     graph = rdflib.Graph()
-    graph.parse('data/14_graph.nt', format='turtle') # change the path
+    graph.parse('data/14_graph__small.nt', format='turtle') # change the path
     print(f"Graph loaded")
 
     demo_bot = Agent(graph, config("UZH_BOT_USERNAME"), config("UZH_BOT_PASSWORD"))
