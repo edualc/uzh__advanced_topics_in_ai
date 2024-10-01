@@ -11,7 +11,8 @@ sys.path.append(os.getcwd())
 
 listen_freq = 2
 
-class Agent:
+
+class BaseAgent:
     def __init__(self, graph, username, password):
         self.graph = graph
         self.username = username
@@ -19,6 +20,11 @@ class Agent:
         self.speakeasy = Speakeasy(host=config('UZH_SPEAKEASY_HOST'), username=username, password=password)
         self.speakeasy.login()  # This framework will help you log out automatically when the program terminates.
 
+    def listen(self):
+        raise NotImplementedError("Subclasses must implement this method.")
+    
+
+class AgentV1(BaseAgent):
     def listen(self):
         while True:
             # only check active chatrooms (i.e., remaining_time > 0) if active=True.
@@ -92,8 +98,8 @@ class Agent:
 if __name__ == '__main__':
     print(f"Loading graph")
     graph = rdflib.Graph()
-    graph.parse('data/14_graph__small.nt', format='turtle') # change the path
+    graph.parse('data/14_graph.nt', format='turtle') # change the path
     print(f"Graph loaded")
 
-    demo_bot = Agent(graph, config("UZH_BOT_USERNAME"), config("UZH_BOT_PASSWORD"))
+    demo_bot = AgentV1(graph, config("UZH_BOT_USERNAME"), config("UZH_BOT_PASSWORD"))
     demo_bot.listen()

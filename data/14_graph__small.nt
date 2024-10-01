@@ -1,0 +1,213 @@
+@prefix ns1: <http://www.wikidata.org/prop/direct/> .
+@prefix ns2: <http://schema.org/> .
+@prefix ns3: <http://ddis.ch/atai/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.wikidata.org/entity/Q3459134> rdfs:label "Colonel Kurtz"@en ;
+    ns2:description "main antagonist of Francis Ford Coppola's Apocalypse Now"@en ;
+    ns1:P1441 <http://www.wikidata.org/entity/Q182692> ;
+    ns1:P170 <http://www.wikidata.org/entity/Q56094> ;
+    ns1:P175 <http://www.wikidata.org/entity/Q34012> ;
+    ns1:P20 <http://www.wikidata.org/entity/Q424> ;
+    ns1:P27 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P31 <http://www.wikidata.org/entity/Q15632617>,
+        <http://www.wikidata.org/entity/Q15773347> ;
+    ns1:P345 "ch0002962"^^xsd:string ;
+    ns1:P607 <http://www.wikidata.org/entity/Q8663>,
+        <http://www.wikidata.org/entity/Q8740> .
+
+<http://www.wikidata.org/entity/Q3620669> rdfs:label "Apocalypse Now Redux"@en ;
+    ns2:description "2001 extended version of Apocalypse Now directed by Francis Ford Coppola"@en ;
+    ns1:P1040 <http://www.wikidata.org/entity/Q976609> ;
+    ns1:P136 <http://www.wikidata.org/entity/Q369747>,
+        <http://www.wikidata.org/entity/Q52162262> ;
+    ns1:P144 <http://www.wikidata.org/entity/Q129778>,
+        <http://www.wikidata.org/entity/Q182692> ;
+    ns1:P161 <http://www.wikidata.org/entity/Q102711>,
+        <http://www.wikidata.org/entity/Q1081030>,
+        <http://www.wikidata.org/entity/Q114179>,
+        <http://www.wikidata.org/entity/Q136221>,
+        <http://www.wikidata.org/entity/Q1374559>,
+        <http://www.wikidata.org/entity/Q1387383>,
+        <http://www.wikidata.org/entity/Q171736>,
+        <http://www.wikidata.org/entity/Q176945>,
+        <http://www.wikidata.org/entity/Q184572>,
+        <http://www.wikidata.org/entity/Q193048>,
+        <http://www.wikidata.org/entity/Q195871>,
+        <http://www.wikidata.org/entity/Q34012>,
+        <http://www.wikidata.org/entity/Q353978>,
+        <http://www.wikidata.org/entity/Q363413>,
+        <http://www.wikidata.org/entity/Q56094>,
+        <http://www.wikidata.org/entity/Q719266>,
+        <http://www.wikidata.org/entity/Q81328> ;
+    ns1:P170 <http://www.wikidata.org/entity/Q56094> ;
+    ns1:P1877 <http://www.wikidata.org/entity/Q82925> ;
+    ns1:P195 <http://www.wikidata.org/entity/Q188740> ;
+    ns1:P2554 <http://www.wikidata.org/entity/Q940271> ;
+    ns1:P272 <http://www.wikidata.org/entity/Q467348> ;
+    ns1:P31 <http://www.wikidata.org/entity/Q11424> ;
+    ns1:P344 <http://www.wikidata.org/entity/Q363413> ;
+    ns1:P364 <http://www.wikidata.org/entity/Q150>,
+        <http://www.wikidata.org/entity/Q1860>,
+        <http://www.wikidata.org/entity/Q9205> ;
+    ns1:P437 <http://www.wikidata.org/entity/Q723685> ;
+    ns1:P462 <http://www.wikidata.org/entity/Q22006653> ;
+    ns1:P495 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P57 <http://www.wikidata.org/entity/Q56094> ;
+    ns1:P58 <http://www.wikidata.org/entity/Q56094>,
+        <http://www.wikidata.org/entity/Q83859>,
+        <http://www.wikidata.org/entity/Q937835> ;
+    ns1:P750 <http://www.wikidata.org/entity/Q465449>,
+        <http://www.wikidata.org/entity/Q80948336>,
+        <http://www.wikidata.org/entity/Q907311> ;
+    ns1:P840 <http://www.wikidata.org/entity/Q424> ;
+    ns1:P915 <http://www.wikidata.org/entity/Q928> ;
+    ns1:P921 <http://www.wikidata.org/entity/Q8740> .
+
+<http://www.wikidata.org/entity/Q182692> rdfs:label "Apocalypse Now"@en ;
+    ns3:rating 8.4 ;
+    ns3:tag "action"@en,
+        "allegory"@en,
+        "anti_war"@en,
+        "boring"@en,
+        "cult"@en,
+        "dark"@en,
+        "dramatic"@en,
+        "insanity"@en,
+        "psychedelic"@en,
+        "psychological"@en,
+        "suspenseful"@en,
+        "violence"@en ;
+    ns2:description "1979 American war film directed by Francis Ford Coppola"@en ;
+    ns1:P1040 <http://www.wikidata.org/entity/Q1827728> ;
+    ns1:P135 <http://www.wikidata.org/entity/Q377616> ;
+    ns1:P136 <http://www.wikidata.org/entity/Q130232>,
+        <http://www.wikidata.org/entity/Q188473>,
+        <http://www.wikidata.org/entity/Q369747>,
+        <http://www.wikidata.org/entity/Q52207310> ;
+    ns1:P1411 <http://www.wikidata.org/entity/Q102427>,
+        <http://www.wikidata.org/entity/Q103360>,
+        <http://www.wikidata.org/entity/Q106291>,
+        <http://www.wikidata.org/entity/Q107258>,
+        <http://www.wikidata.org/entity/Q131520>,
+        <http://www.wikidata.org/entity/Q277751>,
+        <http://www.wikidata.org/entity/Q281939>,
+        <http://www.wikidata.org/entity/Q830079> ;
+    ns1:P144 <http://www.wikidata.org/entity/Q129778> ;
+    ns1:P161 <http://www.wikidata.org/entity/Q102711>,
+        <http://www.wikidata.org/entity/Q103939>,
+        <http://www.wikidata.org/entity/Q1081030>,
+        <http://www.wikidata.org/entity/Q114179>,
+        <http://www.wikidata.org/entity/Q1283819>,
+        <http://www.wikidata.org/entity/Q1332579>,
+        <http://www.wikidata.org/entity/Q136221>,
+        <http://www.wikidata.org/entity/Q1374559>,
+        <http://www.wikidata.org/entity/Q1387383>,
+        <http://www.wikidata.org/entity/Q15452345>,
+        <http://www.wikidata.org/entity/Q155299>,
+        <http://www.wikidata.org/entity/Q171736>,
+        <http://www.wikidata.org/entity/Q176945>,
+        <http://www.wikidata.org/entity/Q184572>,
+        <http://www.wikidata.org/entity/Q193048>,
+        <http://www.wikidata.org/entity/Q195871>,
+        <http://www.wikidata.org/entity/Q1962798>,
+        <http://www.wikidata.org/entity/Q22575685>,
+        <http://www.wikidata.org/entity/Q23072512>,
+        <http://www.wikidata.org/entity/Q245808>,
+        <http://www.wikidata.org/entity/Q28474288>,
+        <http://www.wikidata.org/entity/Q3082309>,
+        <http://www.wikidata.org/entity/Q3386965>,
+        <http://www.wikidata.org/entity/Q34012>,
+        <http://www.wikidata.org/entity/Q353978>,
+        <http://www.wikidata.org/entity/Q363413>,
+        <http://www.wikidata.org/entity/Q3805666>,
+        <http://www.wikidata.org/entity/Q456258>,
+        <http://www.wikidata.org/entity/Q4990707>,
+        <http://www.wikidata.org/entity/Q516789>,
+        <http://www.wikidata.org/entity/Q56094>,
+        <http://www.wikidata.org/entity/Q6755482>,
+        <http://www.wikidata.org/entity/Q719266>,
+        <http://www.wikidata.org/entity/Q81328>,
+        <http://www.wikidata.org/entity/Q862152> ;
+    ns1:P166 <http://www.wikidata.org/entity/Q131520>,
+        <http://www.wikidata.org/entity/Q179808>,
+        <http://www.wikidata.org/entity/Q823422>,
+        <http://www.wikidata.org/entity/Q830079> ;
+    ns1:P18 "https://commons.wikimedia.org/wiki/File:Apocalypse_Now_Logo.png"^^xsd:string ;
+    ns1:P1877 <http://www.wikidata.org/entity/Q82925> ;
+    ns1:P195 <http://www.wikidata.org/entity/Q188740> ;
+    ns1:P1981 <http://www.wikidata.org/entity/Q20644797> ;
+    ns1:P2142 83471511 ;
+    ns1:P2554 <http://www.wikidata.org/entity/Q940271> ;
+    ns1:P272 <http://www.wikidata.org/entity/Q467348> ;
+    ns1:P2756 <http://www.wikidata.org/entity/Q23790279> ;
+    ns1:P2758 <http://www.wikidata.org/entity/Q23817729>,
+        <http://www.wikidata.org/entity/Q23817739> ;
+    ns1:P31 <http://www.wikidata.org/entity/Q11424> ;
+    ns1:P344 <http://www.wikidata.org/entity/Q363413> ;
+    ns1:P345 "tt0078788"^^xsd:string ;
+    ns1:P364 <http://www.wikidata.org/entity/Q1860> ;
+    ns1:P3803 <http://www.wikidata.org/entity/Q226528> ;
+    ns1:P437 <http://www.wikidata.org/entity/Q723685> ;
+    ns1:P462 <http://www.wikidata.org/entity/Q22006653> ;
+    ns1:P495 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P4969 <http://www.wikidata.org/entity/Q3620669> ;
+    ns1:P5021 <http://www.wikidata.org/entity/Q105776216>,
+        <http://www.wikidata.org/entity/Q4165246> ;
+    ns1:P57 <http://www.wikidata.org/entity/Q56094> ;
+    ns1:P577 "1979-05-10"^^xsd:date ;
+    ns1:P58 <http://www.wikidata.org/entity/Q56094>,
+        <http://www.wikidata.org/entity/Q83859>,
+        <http://www.wikidata.org/entity/Q937835> ;
+    ns1:P5970 <http://www.wikidata.org/entity/Q80655145> ;
+    ns1:P750 <http://www.wikidata.org/entity/Q219400>,
+        <http://www.wikidata.org/entity/Q80948336>,
+        <http://www.wikidata.org/entity/Q907311> ;
+    ns1:P767 <http://www.wikidata.org/entity/Q107044926> ;
+    ns1:P840 <http://www.wikidata.org/entity/Q424>,
+        <http://www.wikidata.org/entity/Q881> ;
+    ns1:P915 <http://www.wikidata.org/entity/Q928> ;
+    ns1:P921 <http://www.wikidata.org/entity/Q8740> .
+
+<http://www.wikidata.org/entity/Q56094> rdfs:label "Francis Ford Coppola"@en ;
+    ns2:description "American filmmaker"@en ;
+    ns1:P106 <http://www.wikidata.org/entity/Q1053574>,
+        <http://www.wikidata.org/entity/Q33999>,
+        <http://www.wikidata.org/entity/Q36180> ;
+    ns1:P1343 <http://www.wikidata.org/entity/Q67311526> ;
+    ns1:P136 <http://www.wikidata.org/entity/Q377616> ;
+    ns1:P1411 <http://www.wikidata.org/entity/Q102427>,
+        <http://www.wikidata.org/entity/Q103360>,
+        <http://www.wikidata.org/entity/Q107258>,
+        <http://www.wikidata.org/entity/Q41417> ;
+    ns1:P1412 <http://www.wikidata.org/entity/Q1860> ;
+    ns1:P166 <http://www.wikidata.org/entity/Q102427>,
+        <http://www.wikidata.org/entity/Q103360>,
+        <http://www.wikidata.org/entity/Q107258>,
+        <http://www.wikidata.org/entity/Q1415017>,
+        <http://www.wikidata.org/entity/Q1789102>,
+        <http://www.wikidata.org/entity/Q41417>,
+        <http://www.wikidata.org/entity/Q787131> ;
+    ns1:P18 "https://commons.wikimedia.org/wiki/File:Francis_Ford_Coppola_2011_CC.jpg"^^xsd:string ;
+    ns1:P19 <http://www.wikidata.org/entity/Q12439> ;
+    ns1:P22 <http://www.wikidata.org/entity/Q658614> ;
+    ns1:P26 <http://www.wikidata.org/entity/Q4943414> ;
+    ns1:P27 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P31 <http://www.wikidata.org/entity/Q5> ;
+    ns1:P3373 <http://www.wikidata.org/entity/Q108622> ;
+    ns1:P345 "nm0000338"^^xsd:string ;
+    ns1:P40 <http://www.wikidata.org/entity/Q155299>,
+        <http://www.wikidata.org/entity/Q193628>,
+        <http://www.wikidata.org/entity/Q245808> ;
+    ns1:P6379 <http://www.wikidata.org/entity/Q188740> ;
+    ns1:P69 <http://www.wikidata.org/entity/Q174710> ;
+    ns1:P800 <http://www.wikidata.org/entity/Q1009788>,
+        <http://www.wikidata.org/entity/Q182692>,
+        <http://www.wikidata.org/entity/Q184768>,
+        <http://www.wikidata.org/entity/Q202326>,
+        <http://www.wikidata.org/entity/Q47703>,
+        <http://www.wikidata.org/entity/Q845102> .
+    
