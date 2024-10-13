@@ -45,31 +45,30 @@ class AgentV1(BaseAgent):
 
                     # import code; code.interact(local=dict(globals(), **locals()))
 
-
                     # Implement your agent here #
                     query = message.message
 
-                    if query[query.find("SELECT")+8:query.find("WHERE")-1].find(" ") == -1:
-                        row_names = [query[query.find("SELECT")+8:query.find("WHERE")-1]]
-                    else:
-                        row_names = query[query.find("SELECT")+8:query.find("WHERE")-1].replace("?","").split(" ")
-                    
                     # Execute query on graph
                     qres = self.graph.query(query)
 
                     # Collect answers
                     # --> Currently, we do not add a LIMIT if there are too many rows returned (user issue)
                     all_answers = []
+                    column_names = ', '.join(['?' + str(var) for var in qres.vars])
+
                     for row in qres:
                         answer = []
-                        for row_name in row_names:
-                            answer.append(str(row[row_name]))
-
-                        all_answers.append(answer)
+                        for col_name in qres.vars:
+                            answer.append(str(row[col_name]))
+                        all_answers.append(', '.join(answer))
 
                     # Send a message to the corresponding chat room using the post_messages method of the room object.
                     formatted_answer = '\n'.join([str(ans) for ans in all_answers])
-                    room.post_messages(f"Received your message:\n{formatted_answer}")
+                    room.post_messages(f"""
+                                        Using the RDF Graph, the answer is:
+                                        {column_names}
+                                        {formatted_answer}
+                                        """)
                     print(f"Answered message with:\n{formatted_answer}")
 
                     # Mark the message as processed, so it will be filtered out when retrieving new messages.
