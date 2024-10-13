@@ -43,33 +43,45 @@ class AgentV1(BaseAgent):
                         f"- new message #{message.ordinal}: '{message.message}' "
                         f"- {self.get_time()}")
 
-                    # import code; code.interact(local=dict(globals(), **locals()))
+                    try:
 
-                    # Implement your agent here #
-                    query = message.message
+                        # Implement your agent here #
+                        query = message.message
 
-                    # Execute query on graph
-                    qres = self.graph.query(query)
+                        
+                        # Execute query on graph
+                        qres = self.graph.query(query)
 
-                    # Collect answers
-                    # --> Currently, we do not add a LIMIT if there are too many rows returned (user issue)
-                    all_answers = []
-                    column_names = ', '.join(['?' + str(var) for var in qres.vars])
+                        # Collect answers
+                        # --> Currently, we do not add a LIMIT if there are too many rows returned (user issue)
+                        all_answers = []
+                        column_names = ', '.join(['?' + str(var) for var in qres.vars])
 
-                    for row in qres:
-                        answer = []
-                        for col_name in qres.vars:
-                            answer.append(str(row[col_name]))
-                        all_answers.append(', '.join(answer))
+                        for row in qres:
+                            answer = []
+                            for col_name in qres.vars:
+                                try:
+                                    value = str(row[col_name])
+                                except KeyError:
+                                    value = None
 
-                    # Send a message to the corresponding chat room using the post_messages method of the room object.
-                    formatted_answer = '\n'.join([str(ans) for ans in all_answers])
-                    room.post_messages(f"""
-                                        Using the RDF Graph, the answer is:
-                                        {column_names}
-                                        {formatted_answer}
-                                        """)
-                    print(f"Answered message with:\n{formatted_answer}")
+                                answer.append(value)
+                            all_answers.append(', '.join(answer))
+
+                        # Send a message to the corresponding chat room using the post_messages method of the room object.
+                        formatted_answer = '\n'.join([str(ans) for ans in all_answers])
+                        room.post_messages(f"""
+                                            Using the RDF Graph, the answer is:
+                                            {column_names}
+                                            {formatted_answer}
+                                            """)
+                        print(f"Answered message with:\n{formatted_answer}")
+
+
+                    except Exception as e:
+                        print(f"Error while processing message: {e}")
+                        room.post_messages(f"Error while processing your message. Please try again.")
+                        
 
                     # Mark the message as processed, so it will be filtered out when retrieving new messages.
                     room.mark_as_processed(message)
