@@ -1,0 +1,42 @@
+
+SPARQL QUERY 1:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/>  SELECT ?movieLabel WHERE {    ?movie wdt:P577 ?releaseDate .   FILTER(YEAR(?releaseDate) = 2000) .  ?movie rdfs:label ?movieLabel .  } ORDER BY ?releaseDate LIMIT 1
+Expected Answer:
+['Devil in the Flesh 2']
+
+SPARQL QUERY 2:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/>  SELECT ?movieLabel WHERE {  ?movie ddis:rating 7.5 .  ?movie wdt:P577 ?releaseDate .  ?movie rdfs:label ?movieLabel .  } ORDER BY DESC(?releaseDate) LIMIT 1
+Expected Answer:
+['Public Enemy No. 1 - Todestrieb']
+
+SPARQL QUERY 3:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/>  SELECT ?movieLabel WHERE {  ?movie rdfs:label ?movieLabel .  FILTER(CONTAINS(?movieLabel, "Time")) . } LIMIT 1
+Expected Answer: ['Cairo Time']
+
+SPARQL QUERY 4:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/> SELECT ?movieLabel WHERE {    ?movie ddis:rating ?rating .  FILTER(?rating > 8) . ?movie rdfs:label ?movieLabel .  } ORDER BY DESC(?rating) LIMIT 1
+Expected Answer: ['GoldenEye 007']
+
+SPARQL QUERY 5:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/>  SELECT ?movieLabel WHERE {  ?movie rdfs:label ?movieLabel .  } ORDER BY ASC(?movieLabel) LIMIT 1
+Expected Answer: ['!Kung']
+
+SPARQL QUERY 6:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/>   SELECT ?movieLabel WHERE { ?movie wdt:P577 ?releaseDate .  FILTER(YEAR(?releaseDate) < 1980) . ?movie rdfs:label ?movieLabel .  } ORDER BY ASC(?releaseDate) LIMIT 1
+Expected Answer: ['La Princesse de Clèves']
+
+SPARQL QUERY 7:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/>  SELECT ?movieLabel WHERE {  ?movie wdt:P2142 ?boxOffice .  ?movie rdfs:label ?movieLabel .  }  ORDER BY DESC(?boxOffice)  LIMIT 1
+Expected Answer: ['The Lord of the Rings trilogy']
+
+
+SPARQL QUERY 8:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/>  SELECT ?movieLabel WHERE {  ?movie rdfs:label ?movieLabel .  FILTER(CONTAINS(?movieLabel, "Trip")) . } LIMIT 1
+Expected Answer: ['College Road Trip']
+
+
+SPARQL QUERY 9:
+PREFIX ddis: <http://ddis.ch/atai/>  PREFIX wd: <http://www.wikidata.org/entity/>  PREFIX wdt: <http://www.wikidata.org/prop/direct/>  PREFIX schema: <http://schema.org/> SELECT ?movieLabel WHERE {    ?movie ddis:rating ?rating .  FILTER(?rating > 8) . ?movie rdfs:label ?movieLabel .  } ORDER BY DESC(?movieLabel) LIMIT 1
+Expected Answer: ['White Heat']
+
+
