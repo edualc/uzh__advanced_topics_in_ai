@@ -67,8 +67,9 @@ class RecommendationBot:
         #     return "Sorry, I cannot recommend you a movie based on your query. The reasons might be that I do not know the movies you mentioned or there is a minor problem with the format of your input. You might want to re-check and/or rephrase your sentence. I will be waiting here. "
 
     def match_list_items(self, list_of_lists):
-        print(list_of_lists)
         num_lists = len(list_of_lists)
+        if num_lists == 0:
+            return []
         matched_items = []
         for item in list_of_lists[0]:
             matched_num = 0
@@ -100,9 +101,6 @@ class RecommendationBot:
             dist_movie += pairwise_distances(head.reshape(1, -1), self.entity_emb).reshape(-1)
             idx_movie.append(pairwise_distances(head.reshape(1, -1), self.entity_emb).reshape(-1).argmin())
             dist_genre += pairwise_distances(lhs.reshape(1, -1), self.entity_emb).reshape(-1)
-
-        if len(objects_movie) == 0:
-            return None, None
         
         # find most plausible entities
         matched_genres = self.match_list_items(objects_movie)
@@ -132,8 +130,6 @@ class RecommendationBot:
                     most_plausible_genre.append((str(self.id2ent[url]), url))
                 except KeyError:
                     continue
-            if len(most_plausible_genre)==0:
-                return None, None
         else:
             most_plausible_genre = [(str(self.id2ent[idx]), self.url2nodes[self.id2ent[idx]])
                 for idx in most_likely_genre[:3]]
