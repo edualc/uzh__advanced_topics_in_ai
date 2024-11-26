@@ -30,6 +30,7 @@ class RecommendationBot:
                         matched_genres.append((word, self.genres[word]))
                     if word_film in self.genres.keys():
                         matched_genres.append((word_film, self.genres[word_film]))
+                if len(matched_genres)==0: return "Sorry, I cannot recommend you a movie based on your query. The reasons might be that I do not know the movies you mentioned or there is a minor problem with the format of your input. You might want to re-check and/or rephrase your sentence. I will be waiting here. "
                 recommendation = self.recommend_genre_embed([url for label, url in matched_genres])
                 if recommendation[0] is None:
                     return "Sorry, I cannot recommend you a movie based on your query. The reasons might be that I do not know the movies you mentioned or there is a minor problem with the format of your input. You might want to re-check and/or rephrase your sentence. I will be waiting here. "
