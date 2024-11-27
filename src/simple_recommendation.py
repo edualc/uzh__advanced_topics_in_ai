@@ -9,6 +9,7 @@ class SimpleRecommendationBot:
         WD, WDT, SCHEMA, DDIS, RDFS = load_namespaces()
         self.namespaces = {'WD': WD, 'WDT': WDT, 'SCHEMA': SCHEMA, 'DDIS': DDIS, 'RDFS': RDFS}
 
+        # TODO: Add actors
         self._setup_movies_by_letter()
         self._setup_genres_by_letter()
         self._setup_year_groups()
@@ -142,6 +143,7 @@ class SimpleRecommendationBot:
     
 
     def get_all_token_sequences(self, text, min_length=1, max_length=None):
+        #TODO: Doesn't work for "A.I. Artificial Intelligence"
         tokens = text.replace('?','').replace(',','').replace('.','').split()
         sequences = dict()
         

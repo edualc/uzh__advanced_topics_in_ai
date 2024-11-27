@@ -1,0 +1,71 @@
+Login successful. Session token: JnIBd2LpGPR8H9r8CAIIHVee_tuVREC2
+	- Chatroom 6e0b8480-2a27-4cd7-a957-bd2e6ecb092f - new message #1: 'Can you recommend me a comedy movie' - 10:12:47, 27-11-2024
+	- Chatroom 6e0b8480-2a27-4cd7-a957-bd2e6ecb092f - new message #3: 'How about a drama movie' - 10:13:26, 27-11-2024
+	- Chatroom 6e0b8480-2a27-4cd7-a957-bd2e6ecb092f - new message #5: 'Can you recommend me something like The Lion King
+' - 10:13:49, 27-11-2024
+	- Chatroom a49b064a-8020-4e26-9a33-6ba420cc3405 - new message #1: 'recommend me a drama movie' - 10:20:09, 27-11-2024
+	- Chatroom b0b152bc-6362-4a0f-8905-30fb10aafbf3 - new message #1: 'Herzig please use Grüezi' - 10:21:00, 27-11-2024
+	- Chatroom b0b152bc-6362-4a0f-8905-30fb10aafbf3 - new message #3: 'Given that I like The Lion King, Pocahontas, and The Beauty and the Beast, can you recommend some movies? ' - 10:21:34, 27-11-2024
+	- Chatroom ff7a904d-98b6-4bce-835f-3bfbddbbce16 - new message #1: 'reference-2
+' - 10:22:05, 27-11-2024
+	- Chatroom 989d763d-51b2-4157-93c5-9d05453fb251 - new message #1: 'Recommend movies similar to Hamlet and Othello. 
+
+' - 10:22:11, 27-11-2024
+	- Chatroom a49b064a-8020-4e26-9a33-6ba420cc3405 - new message #3: 'I want to watch similar movies to Inception.' - 10:24:58, 27-11-2024
+	- Chatroom a49b064a-8020-4e26-9a33-6ba420cc3405 - new message #5: 'Recommend me occupation for my future' - 10:27:23, 27-11-2024
+	- Chatroom a49b064a-8020-4e26-9a33-6ba420cc3405 - new message #7: 'You could not help me :(' - 10:27:44, 27-11-2024
+	- Chatroom a49b064a-8020-4e26-9a33-6ba420cc3405 - new message #9: 'Hello' - 10:27:55, 27-11-2024
+	- Chatroom a49b064a-8020-4e26-9a33-6ba420cc3405 - new message #11: 'Lion' - 10:28:14, 27-11-2024
+	- Chatroom 9d35f756-c661-4b0c-a237-502742be2957 - new message #1: 'Given that I like Kung Fu Panda, can you recommend some movies?' - 10:28:27, 27-11-2024
+	- Chatroom f0ab0e28-efa4-4407-965a-c3b03215d31c - new message #1: 'Given that I like Kung Fu Panda, can you recommend some movies?' - 10:28:40, 27-11-2024
+	- Chatroom 9d35f756-c661-4b0c-a237-502742be2957 - new message #3: 'Recommend movies like Nightmare on Elm Street, Friday the 13th, and Halloween.' - 10:28:52, 27-11-2024
+	- Chatroom f0ab0e28-efa4-4407-965a-c3b03215d31c - new message #3: 'Recommend movies like Nightmare on Elm Street, Friday the 13th, and Halloween' - 10:28:57, 27-11-2024
+	- Chatroom f5c5ea1d-7963-48cd-97b8-365051357e03 - new message #1: 'Given that I like Kung Fu Panda, can you recommend some movies?' - 10:28:57, 27-11-2024
+	- Chatroom f5c5ea1d-7963-48cd-97b8-365051357e03 - new message #3: 'Recommend movies like Nightmare on Elm Street, Friday the 13th, and Halloween.' - 10:29:26, 27-11-2024
+	- Chatroom f0ab0e28-efa4-4407-965a-c3b03215d31c - new message #5: 'Given that I like The Lion King, Pocahontas, and The Beauty and the Beast, can you recommend some movies?' - 10:29:28, 27-11-2024
+	- Chatroom 9d35f756-c661-4b0c-a237-502742be2957 - new message #5: 'Given that I like The Lion King, Pocahontas, and The Beauty and the Beast, can you recommend some movies?' - 10:29:39, 27-11-2024
+	- Chatroom f5c5ea1d-7963-48cd-97b8-365051357e03 - new message #5: 'Given that I like The Lion King, Pocahontas, and The Beauty and the Beast, can you recommend some movies?' - 10:29:43, 27-11-2024
+	- Chatroom 9d35f756-c661-4b0c-a237-502742be2957 - new message #7: 'Hello?' - 10:30:27, 27-11-2024
+	- Chatroom f0ab0e28-efa4-4407-965a-c3b03215d31c - new message #7: 'Recommend movies similar to Hamlet and Othello.' - 10:30:33, 27-11-2024
+	- Chatroom 9d35f756-c661-4b0c-a237-502742be2957 - new message #9: 'Good job' - 10:30:44, 27-11-2024
+	- Chatroom f0ab0e28-efa4-4407-965a-c3b03215d31c - new message #9: 'Recommend movies similar to Hamlet and Othello. ' - 10:30:55, 27-11-2024
+	- Chatroom f0ab0e28-efa4-4407-965a-c3b03215d31c - new message #11: '
+Recommend movies similar to Hamlet and Othello. ' - 10:31:34, 27-11-2024
+	- Chatroom f5c5ea1d-7963-48cd-97b8-365051357e03 - new message #7: 'recommend some action movies' - 10:32:35, 27-11-2024
+	- Chatroom f5c5ea1d-7963-48cd-97b8-365051357e03 - new message #9: 'good' - 10:32:43, 27-11-2024
+	- Chatroom f0ab0e28-efa4-4407-965a-c3b03215d31c - new message #13: 'Recommend movies similar to Star Wars: Episode IV - A New Hope' - 10:32:50, 27-11-2024
+	- Chatroom f5c5ea1d-7963-48cd-97b8-365051357e03 - new message #11: 'why u keep giving answer when there is no request' - 10:33:10, 27-11-2024
+	- Chatroom 21bb948d-b0d1-4deb-b41f-c9e27ab8a44a - new message #1: 'you don't have to give answers when not requested :)' - 10:39:43, 27-11-2024
+	- Chatroom 21bb948d-b0d1-4deb-b41f-c9e27ab8a44a - new message #3: 'Recommend movies similar to Star Wars: Episode IV - A New Hope.' - 10:40:35, 27-11-2024
+	- Chatroom 5a0be209-b4be-4eb4-a426-0eac04941618 - new message #1: 'Recommend movies similar to Hamlet and Othello.' - 10:42:06, 27-11-2024
+	- Chatroom 72aaa344-eda5-4fee-85ed-ad5193bc5296 - new message #1: 'Recommend movies similar to Hamlet and Othello.' - 10:42:14, 27-11-2024
+	- Chatroom 21bb948d-b0d1-4deb-b41f-c9e27ab8a44a - new message #5: 'Recommend some movies given that I like Ryan Gosling?' - 10:42:39, 27-11-2024
+	- Chatroom 5a0be209-b4be-4eb4-a426-0eac04941618 - new message #3: 'Recommend some movies given that I like Ryan Gosling?' - 10:43:20, 27-11-2024
+	- Chatroom 72aaa344-eda5-4fee-85ed-ad5193bc5296 - new message #3: 'Recommend some movies given that I like Ryan Gosling?' - 10:43:51, 27-11-2024
+	- Chatroom 5a0be209-b4be-4eb4-a426-0eac04941618 - new message #5: 'Recommend movies like Forest Gump and The Lord of the Rings' - 10:44:24, 27-11-2024
+	- Chatroom 21bb948d-b0d1-4deb-b41f-c9e27ab8a44a - new message #7: 'Recommend movies like Forest Gump and The Lord of the Rings: The Fellowship of the Ring.' - 10:44:26, 27-11-2024
+	- Chatroom 72aaa344-eda5-4fee-85ed-ad5193bc5296 - new message #5: 'Recommend movies like Forest Gump and The Lord of the Rings: The Fellowship of the Ring.' - 10:44:32, 27-11-2024
+	- Chatroom 21bb948d-b0d1-4deb-b41f-c9e27ab8a44a - new message #9: 'Recommend me some romance movies.' - 10:45:24, 27-11-2024
+	- Chatroom 72aaa344-eda5-4fee-85ed-ad5193bc5296 - new message #7: 'Given that I like The Lion King, Green Street 2 Stand Your Ground, Pochontas, and The Beauty and the Beast, can you recommend some movies' - 10:45:33, 27-11-2024
+	- Chatroom 5a0be209-b4be-4eb4-a426-0eac04941618 - new message #7: 'Are there movies similar to The Dark Knight, Logan, or Joker that you can recommend?
+' - 10:45:48, 27-11-2024
+	- Chatroom 5a0be209-b4be-4eb4-a426-0eac04941618 - new message #9: 'Can you recommend romantic movies like The Notebook, Titanic, and Pride & Prejudice?
+' - 10:45:58, 27-11-2024
+	- Chatroom 72aaa344-eda5-4fee-85ed-ad5193bc5296 - new message #9: 'recommend me some movies I can watch this evening?' - 10:46:40, 27-11-2024
+	- Chatroom 72aaa344-eda5-4fee-85ed-ad5193bc5296 - new message #11: 'who is the director of A, and It?' - 10:47:18, 27-11-2024
+	- Chatroom 72aaa344-eda5-4fee-85ed-ad5193bc5296 - new message #13: 'hi how are you?' - 10:48:20, 27-11-2024
+	- Chatroom 72aaa344-eda5-4fee-85ed-ad5193bc5296 - new message #15: 'what day is it today?' - 10:48:38, 27-11-2024
+	- Chatroom dcc822d0-8523-422d-aa56-2aeb3294aae8 - new message #1: 'Recommend me movies Ryan gosling played in' - 10:51:07, 27-11-2024
+	- Chatroom 07049fd5-abd5-4af3-9e5c-dbda73dbb0bb - new message #1: 'Given that I like A.I. Artificial Intelligence, can you recommend some movies?' - 10:54:27, 27-11-2024
+	- Chatroom 7f9e8a0a-b922-4906-b3a6-b027b152c865 - new message #1: 'Given that I like A.I. Artificial Intelligence, can you recommend some movies?' - 10:54:49, 27-11-2024
+	- Chatroom 7f9e8a0a-b922-4906-b3a6-b027b152c865 - new message #3: ' Recommend movies like The Godfather.' - 10:55:23, 27-11-2024
+	- Chatroom 07049fd5-abd5-4af3-9e5c-dbda73dbb0bb - new message #3: 'Recommend movies like The Godfather.' - 10:56:06, 27-11-2024
+	- Chatroom 7f9e8a0a-b922-4906-b3a6-b027b152c865 - new message #5: 'I really like The Lion King and Pocahontas, can you recommend some similar movies? ' - 10:56:16, 27-11-2024
+	- Chatroom 07049fd5-abd5-4af3-9e5c-dbda73dbb0bb - new message #5: 'I really like The Lion King and Pocahontas, can you recommend some similar movies?' - 10:56:36, 27-11-2024
+	- Chatroom 7f9e8a0a-b922-4906-b3a6-b027b152c865 - new message #7: 'Recommend me movies starring Leonardo DiCaprio.' - 10:56:49, 27-11-2024
+	- Chatroom 7f9e8a0a-b922-4906-b3a6-b027b152c865 - new message #9: 'Recommend me a thriller released in 1990.' - 10:57:37, 27-11-2024
+	- Chatroom 7f9e8a0a-b922-4906-b3a6-b027b152c865 - new reaction #8: 'THUMBS_DOWN' - 10:57:40, 27-11-2024
+	- Chatroom 07049fd5-abd5-4af3-9e5c-dbda73dbb0bb - new message #7: 'recommend movies like lord of the rings' - 10:58:40, 27-11-2024
+	- Chatroom 07049fd5-abd5-4af3-9e5c-dbda73dbb0bb - new message #9: 'Recommend movies like Nightmare on Elm Street, Friday the 13th, and Halloween.' - 10:59:18, 27-11-2024
+	- Chatroom 07049fd5-abd5-4af3-9e5c-dbda73dbb0bb - new message #11: 'Recommend movies similar to the Lion King.' - 10:59:53, 27-11-2024
+	- Chatroom dcc822d0-8523-422d-aa56-2aeb3294aae8 - new message #3: 'Given that I like A.I. Artificial Intelligence, can you recommend some movies?' - 10:59:59, 27-11-2024
