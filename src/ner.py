@@ -12,7 +12,7 @@ from .utils import *
 
 
 class FactualBotNER(nn.Module):
-    def __init__(self, g, nodes, predicates, entity_emb, relation_emb, ent2id, rel2id, ent2lbl, lbl2ent, id2ent):
+    def __init__(self, g, nodes,url2nodes, predicates, entity_emb, relation_emb, ent2id, rel2id, ent2lbl, lbl2ent, id2ent,crowd_data):
         super().__init__()
         self.setup_ner()
 
@@ -29,10 +29,12 @@ class FactualBotNER(nn.Module):
             "when was ENTITY (.*)",
             # "when did ENTITY (.*)",
             "where was ENTITY (.*)",
-            "where is ENTITY (.*)"
+            "where is ENTITY (.*)",
+            "can you tell me the (.*) of ENTITY"
         ]
         self.g = g
         self.nodes = nodes
+        self.url2nodes = url2nodes
         self.predicates = predicates
         self.entity_emb = entity_emb
         self.relation_emb = relation_emb
@@ -41,6 +43,7 @@ class FactualBotNER(nn.Module):
         self.ent2lbl = ent2lbl
         self.lbl2ent = lbl2ent
         self.id2ent = id2ent
+        self.crowd_data = crowd_data
     
     def setup_ner(self):
         tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
@@ -222,6 +225,10 @@ class FactualBotNER(nn.Module):
         LIMIT 1
         """.format(matched_predicate_url,matched_entity_url)
 
+        crowd_answer = self.crowd_source(matched_entity_url,matched_predicate_url)
+        if crowd_answer != "":
+            return crowd_answer
+
         qres1 = self.g.query(query_option1)
         qres2 = self.g.query(query_option2)
 
@@ -243,6 +250,47 @@ class FactualBotNER(nn.Module):
         else:
             # answer1, answer2, answer3 = self.final_embed(matched_entity_url,matched_predicate_url)    
             return f"""According to the the graph, the {matched_predicate} of {matched_entity} is {answer}."""
+    
+    def uriref_ent_extractor(self,url):
+        entity = url.split("/")[-1]
+        if "entity" in url:
+            entity = "wd:"+entity
+        elif "prop" in url:
+            entity = "wdt:"+entity
+        elif "ddis" in url:
+            entity = "ddis:"+entity
+        elif "schema" in url:
+            entity = "schema:"+entity
+        elif "rdf-schema" in url:
+            entity = "rdfs:"+entity
+        return entity
+    
+    def crowd_source(self,matched_entity_url,matched_predicate_url):
+        entity = self.uriref_ent_extractor(matched_entity_url)
+        predicate = self.uriref_ent_extractor(matched_predicate_url)
+        answer = ""
+        if entity in self.crowd_data["Input1ID"].values and predicate in self.crowd_data["Input2ID"].values:
+            votes = self.crowd_data[(self.crowd_data["Input1ID"]==entity) & (self.crowd_data["Input2ID"]== predicate)]
+            try:
+                support_votes = votes[votes["AnswerLabel"]=="CORRECT"]["Votes"].values[0]
+            except:
+                support_votes=0
+            try:
+                reject_votes = votes[votes["AnswerLabel"]=="INCORRECT"]["Votes"].values[0]
+            except:
+                reject_votes=0
+            kappa = votes["kappa"].values[0]
+            result = votes["Input3ID"].values[0]
+            if "wd:" in result:
+                result = 'http://www.wikidata.org/entity/'+result.split(":")[-1]
+                result = self.url2nodes[result]
+
+            entity = self.url2nodes[matched_entity_url]
+            predicate = self.url2nodes[matched_predicate_url]
+
+            answer = f"""The {predicate} of {entity} is {result}.\n[Crowd, inter-rater agreement {kappa:.4f}, The answer distribution for this specific was {support_votes} support votes, {reject_votes} reject votes]"""
+        
+        return answer
     
     def final_embed(self,matched_entity_url,matched_predicate_url):
         head = self.entity_emb[self.ent2id[matched_entity_url]]

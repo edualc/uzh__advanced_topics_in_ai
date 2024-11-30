@@ -6,6 +6,7 @@ import numpy as np
 import csv
 import jsonpickle
 import os
+import pandas as pd
 
 WN_NOUN = 'n'
 WN_VERB = 'v'
@@ -27,6 +28,49 @@ def load_embeddings():
     print(f"Embeddings loaded.")
     return entity_emb, relation_emb
 
+def load_crowd_data():
+    crowd_data = pd.read_table("dataset/crowd_data.tsv")
+    data_with_agreement_rate = process_crowd_data(crowd_data)
+    print(f"Crowd dataset loaded.")
+    return data_with_agreement_rate
+
+def process_crowd_data(crowd_data):
+    # discard malicious users (determined as approval rate <= %50 and WorkTimeInSeconds <=10)
+    processed_data = crowd_data[(crowd_data["LifetimeApprovalRate"]>"50%") & (crowd_data["WorkTimeInSeconds"]>10)]
+    # get number of tasks per batch
+    tasks_per_batch = processed_data[["HITTypeId","HITId"]].drop_duplicates().groupby("HITTypeId").count().reset_index()
+    tasks_per_batch.columns = ["HITTypeId","NumberofTasks"]
+    # get number of support and reject votes per microtask
+    votes_per_task = processed_data[["HITTypeId","HITId","AnswerID","Reward"]].groupby(["HITTypeId","HITId","AnswerID"]).count().reset_index()
+    votes_per_task.columns = ["HITTypeId","HITId","AnswerID","Votes"]
+    # get total number of votes per task and the regarding votes' ratio
+    num_votes_per_task = processed_data[["HITTypeId","HITId","Reward"]].groupby(["HITTypeId","HITId"]).count().reset_index()
+    num_votes_per_task.columns = ["HITTypeId","HITId","Num. Votes"]
+    votes_per_task =pd.merge(votes_per_task,num_votes_per_task)
+    votes_per_task["Votes Ratio"] = votes_per_task["Votes"] / votes_per_task["Num. Votes"]
+    # calculate P_i for each task
+    votes_per_task["Pi"] = votes_per_task["Votes"]*(votes_per_task["Votes"]-1) / (votes_per_task["Num. Votes"] * (votes_per_task["Num. Votes"]-1))
+    Pis = votes_per_task[["HITTypeId","HITId","Pi"]].groupby(["HITTypeId","HITId"]).sum().reset_index()
+    votes_per_task = pd.merge(votes_per_task.drop("Pi",axis=1),Pis)
+    # calculate p_j and its square for each batch and Pi's ratio w.r.t number of tasks
+    temp_merged = pd.merge(votes_per_task[["HITTypeId","AnswerID","Votes Ratio"]].groupby(["HITTypeId","AnswerID"]).sum().reset_index(),tasks_per_batch)
+    temp_merged["pj"] = temp_merged["Votes Ratio"] / temp_merged["NumberofTasks"]
+    votes_per_task = pd.merge(votes_per_task,temp_merged.drop(["Votes Ratio"],axis=1))
+    votes_per_task["pj Square"] = votes_per_task["pj"]**2
+    votes_per_task["Pi Ratio"] = votes_per_task["Pi"] / votes_per_task["NumberofTasks"]
+    # calculate P_bar
+    P_bar=votes_per_task[["HITTypeId","Pi Ratio"]].groupby("HITTypeId").sum().reset_index()
+    P_bar.columns = ["HITTypeId","P_bar"]
+    votes_per_task = pd.merge(votes_per_task,P_bar)
+    # calculate Pe_bar
+    Pe_bar = votes_per_task[["HITTypeId","pj Square"]].drop_duplicates().groupby(["HITTypeId"]).sum().reset_index()
+    Pe_bar.columns = ["HITTypeId","Pe_bar"]
+    votes_per_task = pd.merge(votes_per_task,Pe_bar)
+    # calculate kappa
+    votes_per_task["kappa"]=(votes_per_task["P_bar"]-votes_per_task["Pe_bar"]) / (1-votes_per_task["Pe_bar"])
+    # merge the statistics with original data
+    data_with_agreement_rate= pd.merge(processed_data,votes_per_task[["HITTypeId","HITId","AnswerID","Votes","kappa"]])
+    return data_with_agreement_rate
 
 def load_dictionaries(g):
     with open('dataset/ddis-graph-embeddings/entity_ids.del', 'r') as ifile:
