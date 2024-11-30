@@ -22,7 +22,7 @@ class RecommendationBot:
         self.cast_members = cast_members
 
     def get_recommendation(self, input):
-        # try:
+        try:
             ner_results=self.bot_ner._ner_results(input)
             if len(ner_results)==0:
                 genre_search = [(i,i+" film") for i in input.replace(".","").split(" ")]
@@ -74,8 +74,8 @@ class RecommendationBot:
             elif len(pub_dates)==1:
                 genres_matched += " from around " + pub_dates[0] +"0s"
             return f"Based on what you like, I would recommend you watching movie with the genres {genres_matched} such as {recommendation[0][1]}."
-        # except Exception as e:
-        #     return "Sorry, I cannot recommend you a movie based on your query. The reasons might be that I do not know the movies you mentioned or there is a minor problem with the format of your input. You might want to re-check and/or rephrase your sentence. I will be waiting here. "
+        except Exception as e:
+            return "Sorry, I cannot recommend you a movie based on your query. The reasons might be that I do not know the movies you mentioned or there is a minor problem with the format of your input. You might want to re-check and/or rephrase your sentence. I will be waiting here. "
 
     def match_list_items(self, list_of_lists):
         num_lists = len(list_of_lists)
