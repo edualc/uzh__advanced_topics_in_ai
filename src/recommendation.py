@@ -2,10 +2,11 @@
 from rdflib.term import URIRef
 from sklearn.metrics import pairwise_distances
 import numpy as np
+import random
 
 
 class RecommendationBot:
-    def __init__(self, bot_ner, g, nodes, predicates, genres, movies, url2nodes, entity_emb, rel2id, ent2id, id2ent, relation_emb):
+    def __init__(self, bot_ner, g, nodes, predicates, genres, movies, url2nodes, entity_emb, rel2id, ent2id, id2ent, relation_emb,cast_members):
         self.bot_ner = bot_ner
         self.g = g
         self.genres = genres
@@ -18,9 +19,10 @@ class RecommendationBot:
         self.ent2id = ent2id
         self.id2ent = id2ent
         self.relation_emb = relation_emb
+        self.cast_members = cast_members
 
     def get_recommendation(self, input):
-        try:
+        # try:
             ner_results=self.bot_ner._ner_results(input)
             if len(ner_results)==0:
                 genre_search = [(i,i+" film") for i in input.replace(".","").split(" ")]
@@ -40,15 +42,23 @@ class RecommendationBot:
                 genres_matched = genres_matched.strip()[:-1]
                 return f"If you like {genres_matched} movies, I would recommend you watch {recommendation[0][1]}."
                 
-            entities = self.bot_ner.entity_extraction(ner_results, input)
+            entities = self.bot_ner.get_entities(input) 
             entities_matched = [self.bot_ner.match_things(self.nodes, ent) for ent in entities]
-            urls_entities = [url for ent,url in entities_matched]
+            entities_matched_list = []
+            for ent,url in entities_matched:
+                entities_matched_list+=self.bot_ner.find_entities_with_same_name(ent)
+            urls_entities = [url for url,ent in entities_matched_list]
             try:
                 pub_dates = sorted(list(dict.fromkeys([[str(o)[:3] for s,p,o in self.g.triples((URIRef(url), URIRef(self.predicates["publication date"]), None))][0]
                                 for url in urls_entities])))
             except:
                 pub_dates=[]
             recommendation = self.recommend_genre_embed(urls_entities)
+            if recommendation[1] is None: # cast member case
+                actor = entities_matched[0][0] + " has"
+                if len(entities_matched)>1:
+                    actor = actor[:-3] + "and others you mentioned have"
+                return f"Oh, {actor} great films! I would recommend you watch {recommendation[0][0][0]},{recommendation[0][1][0]}, and {recommendation[0][2][0]}."
             if recommendation[0] is None:
                 return "Sorry, I cannot recommend you a movie based on your query. The reasons might be that I do not know the movies you mentioned or there is a minor problem with the format of your input. You might want to re-check and/or rephrase your sentence. I will be waiting here "
             genres_matched = ""
@@ -64,8 +74,8 @@ class RecommendationBot:
             elif len(pub_dates)==1:
                 genres_matched += " from around " + pub_dates[0] +"0s"
             return f"Based on what you like, I would recommend you watching movie with the genres {genres_matched} such as {recommendation[0][1]}."
-        except Exception as e:
-            return "Sorry, I cannot recommend you a movie based on your query. The reasons might be that I do not know the movies you mentioned or there is a minor problem with the format of your input. You might want to re-check and/or rephrase your sentence. I will be waiting here. "
+        # except Exception as e:
+        #     return "Sorry, I cannot recommend you a movie based on your query. The reasons might be that I do not know the movies you mentioned or there is a minor problem with the format of your input. You might want to re-check and/or rephrase your sentence. I will be waiting here. "
 
     def match_list_items(self, list_of_lists):
         num_lists = len(list_of_lists)
@@ -87,8 +97,15 @@ class RecommendationBot:
         dist_movie = np.zeros(self.entity_emb.shape[0])
         idx_movie = []
         objects_movie=[]
+        cast_members_movie = []
         # add vectors according to TransE scoring function.
         for entity_url in matched_entity_url_list:
+            if entity_url in self.cast_members.values():
+                related_entities = list(dict.fromkeys([str(s) for s,p,o in self.g.triples((None, URIRef(self.predicates["cast member"]), URIRef(entity_url)))]))
+                for potential_movie in related_entities:
+                    if potential_movie in self.movies.values():
+                        cast_members_movie.append((self.url2nodes[potential_movie],potential_movie))
+
             for s, p, o in self.g.triples((URIRef(entity_url), None, None)):
                 if str(o) in self.genres.values():
                     objects_movie.append(list(dict.fromkeys([str(o)])))
@@ -103,6 +120,9 @@ class RecommendationBot:
             idx_movie.append(pairwise_distances(head.reshape(1, -1), self.entity_emb).reshape(-1).argmin())
             dist_genre += pairwise_distances(lhs.reshape(1, -1), self.entity_emb).reshape(-1)
         
+        if len(cast_members_movie)>0:
+            random.shuffle(cast_members_movie)
+            return cast_members_movie[:3],None
         # find most plausible entities
         matched_genres = self.match_list_items(objects_movie)
         if 'http://www.wikidata.org/entity/Q11424' in matched_genres:

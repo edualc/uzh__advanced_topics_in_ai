@@ -201,6 +201,13 @@ class FactualBotNER(nn.Module):
                 tmp = editdistance.eval(relation.lower(), input)
                 match_key = input
         return match_key
+    
+    def find_entities_with_same_name(self,matched_entity):
+        list_matched = []
+        for key,value in self.url2nodes.items():
+            if value == matched_entity:
+                list_matched.append((key,value))
+        return list_matched
         
     def final_query(self,matched_entity,matched_entity_url,matched_predicate,matched_predicate_url):
         query_option1 ="""
@@ -212,7 +219,7 @@ class FactualBotNER(nn.Module):
             FILTER(LANG(?lbl) = "en").
         }}
         LIMIT 1
-        """.format(matched_entity_url,matched_predicate_url)
+        """
 
         query_option2 ="""
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
@@ -223,23 +230,25 @@ class FactualBotNER(nn.Module):
             FILTER(LANG(?lbl) = "en").
         }}
         LIMIT 1
-        """.format(matched_predicate_url,matched_entity_url)
+        """
 
         crowd_answer = self.crowd_source(matched_entity_url,matched_predicate_url)
         if crowd_answer != "":
             return crowd_answer
 
-        qres1 = self.g.query(query_option1)
-        qres2 = self.g.query(query_option2)
-
-        answer = ""
-        try:
-            for row in qres1:
-                answer = row.lbl
-        except answer == "":
-            for row in qres2:
-                answer = row.lbl 
-
+        list_matched = self.find_entities_with_same_name(matched_entity)
+        for key,value in list_matched:
+            qres1 = self.g.query(query_option1.format(key,matched_predicate_url))
+            qres2 = self.g.query(query_option2.format(matched_predicate_url,key))
+            answer = ""
+            try:
+                for row in qres1:
+                    answer = row.lbl
+            except answer == "":
+                for row in qres2:
+                    answer = row.lbl 
+            if answer!="":
+                break
 
         if answer == "":
             try:

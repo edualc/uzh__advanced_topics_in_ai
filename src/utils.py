@@ -222,6 +222,31 @@ def load_genres(g, predicates, ent2lbl):
                 continue
     return genres
 
+def load_cast_members(g, ent2lbl):
+    _, WDT, _, _, _ = load_namespaces()
+
+    def extract_cast_members():
+        cast_members = {}
+        for cast_member_url in list(dict.fromkeys([str(o) for s,p,o in g.triples((None, URIRef(WDT.P161), None))])):
+            if cast_member_url not in cast_members.values():
+                try:
+                    label = ent2lbl[cast_member_url]
+                    cast_members[label] = cast_member_url
+                except:
+                    continue
+        return cast_members
+
+    cast_members_path = 'dataset/processed/cast_members.json'
+    if os.path.exists(cast_members_path):
+        with open(cast_members_path, 'r') as ifile:
+            cast_members = jsonpickle.decode(ifile.read())
+    else:
+        cast_members = extract_cast_members()
+        with open(cast_members_path, 'w') as ofile:
+            ofile.write(jsonpickle.encode(cast_members))
+
+    return cast_members
+
 
 def convert_word(input, from_pos, to_pos):    
     """ Transform words given from/to POS tags """
