@@ -78,11 +78,12 @@ class SimpleRecommendationBot:
         actor_query = f"""
         PREFIX wd: <{self.namespaces['WD']}>
         PREFIX wdt: <{self.namespaces['WDT']}>
-        SELECT ?actor ?actorLabel
+        SELECT ?actor ?actorLabel ?imdbID
         WHERE {{
             ?actor wdt:P106 wd:Q33999 .
             ?actor rdfs:label ?actorLabel .
-            FILTER(LANG(?actorLabel) = 'en')
+            FILTER(LANG(?actorLabel) = 'en') .
+            ?actor wdt:P345 ?imdbID
         }}
         """
 
@@ -93,7 +94,8 @@ class SimpleRecommendationBot:
             actor = row['actor'].toPython().split('/')[-1]
             tmp[label] = {
                 'full_name': row['actorLabel'].toPython(),
-                'entity': actor
+                'entity': actor,
+                'imdbID': row['imdbID'].toPython()
             }
 
         with open(actors_path, 'w') as ofile:
@@ -178,12 +180,14 @@ class SimpleRecommendationBot:
 
         self.actors_by_two_letters = {}
         self.actor2id = {}
+        self.actor2imdb = {}
         for actor in self.actors:
             letter = actor[:2].lower()
             if letter not in self.actors_by_two_letters:
                 self.actors_by_two_letters[letter] = []
             self.actors_by_two_letters[letter].append(actor.lower())
             self.actor2id[actor.lower()] = self.actors[actor]['entity']
+            self.actor2imdb[actor.lower()] = self.actors[actor]['imdbID']
 
     def get_all_token_sequences(self, text, min_length=1, max_length=None):
         if text.endswith('?') or text.endswith(',') or text.endswith('.'):
