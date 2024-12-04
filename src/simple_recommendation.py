@@ -9,11 +9,11 @@ class SimpleRecommendationBot:
         WD, WDT, SCHEMA, DDIS, RDFS = load_namespaces()
         self.namespaces = {'WD': WD, 'WDT': WDT, 'SCHEMA': SCHEMA, 'DDIS': DDIS, 'RDFS': RDFS}
 
-        # TODO: Add actors
         self._setup_movies_by_letter()
         self._setup_genres_by_letter()
         self._setup_year_groups()
         self._setup_movie_vectors()
+        self._setup_actors_by_letter()
 
 
     def _setup_year_groups(self):
@@ -69,6 +69,37 @@ class SimpleRecommendationBot:
 
             self.movie_vectors[i, :] = np.concatenate([genre_vec, year_vec])
 
+    def _extract_actors_from_graph(self):
+        actors_path = 'dataset/processed/actors.json'
+        if os.path.exists(actors_path):
+            with open(actors_path, 'r') as ifile:
+                return jsonpickle.decode(ifile.read())
+
+        actor_query = f"""
+        PREFIX wd: <{self.namespaces['WD']}>
+        PREFIX wdt: <{self.namespaces['WDT']}>
+        SELECT ?actor ?actorLabel
+        WHERE {{
+            ?actor wdt:P106 wd:Q33999 .
+            ?actor rdfs:label ?actorLabel .
+            FILTER(LANG(?actorLabel) = 'en')
+        }}
+        """
+
+        result = self.g.query(actor_query)
+        tmp = {}
+        for row in result:
+            label = row['actorLabel'].toPython().lower()
+            actor = row['actor'].toPython().split('/')[-1]
+            tmp[label] = {
+                'full_name': row['actorLabel'].toPython(),
+                'entity': actor
+            }
+
+        with open(actors_path, 'w') as ofile:
+            ofile.write(jsonpickle.encode(tmp))
+
+        return tmp
 
     def _extract_data_from_graph(self):
         movie_genres_path = 'dataset/processed/movie_genres.json'
@@ -142,9 +173,24 @@ class SimpleRecommendationBot:
                 self.genre2id[genre_label.lower()] = genre_id
     
 
+    def _setup_actors_by_letter(self):
+        self.actors = self._extract_actors_from_graph()
+
+        self.actors_by_two_letters = {}
+        self.actor2id = {}
+        for actor in self.actors:
+            letter = actor[:2].lower()
+            if letter not in self.actors_by_two_letters:
+                self.actors_by_two_letters[letter] = []
+            self.actors_by_two_letters[letter].append(actor.lower())
+            self.actor2id[actor.lower()] = self.actors[actor]['entity']
+
     def get_all_token_sequences(self, text, min_length=1, max_length=None):
-        #TODO: Doesn't work for "A.I. Artificial Intelligence"
-        tokens = text.replace('?','').replace(',','').replace('.','').split()
+        if text.endswith('?') or text.endswith(',') or text.endswith('.'):
+            text = text[:-1]
+        text = text.replace(',','')
+        
+        tokens = text.split()
         sequences = dict()
         
         # If max_length is not specified, use the full length of tokens
@@ -163,60 +209,113 @@ class SimpleRecommendationBot:
         return sequences
 
 
+    def get_entities__check_movies(self, test_string, overlap_key, overlap_position_key, overlap_dict):
+        if overlap_key not in self.movies_by_two_letters:
+            return []
+        
+        longest_substring = None
+        tmp = []
+                
+        substrings = overlap_dict[overlap_position_key]
+        movie_candidates = self.movies_by_two_letters[overlap_key]
+        
+        # check if any substring is in the movies list
+        for substring in substrings:
+            if substring in movie_candidates:
+                if longest_substring is None or len(substring) > len(longest_substring):
+                    longest_substring = substring
+                
+        if longest_substring is not None:
+            # print(f"Substring: {longest_substring}")
+            # find index of the substring in the original text in terms of tokens
+            start_index = test_string.lower().find(longest_substring)
+            end_index = start_index + len(longest_substring)
+            # print(f"Start index: {start_index}, End index: {end_index}")
+            tmp.append((longest_substring, start_index, end_index))
+        
+        return tmp
+    
+    def get_entities__check_genres(self, test_string, overlap_key, overlap_position_key, overlap_dict):
+        if overlap_key not in self.genres_by_two_letters:
+            return []
+        
+        longest_substring = None
+        tmp = []
+                
+        substrings = overlap_dict[overlap_position_key]
+        genre_candidates = self.genres_by_two_letters[overlap_key]
+        
+        # check if any substring is in the genres list
+        for substring in substrings:
+            substring_candidates = set([substring, f"{substring} film", f"{substring} story"])
+            found_overlap = substring_candidates & set(genre_candidates)
+
+            for candidate in found_overlap:
+                if longest_substring is None or len(candidate) > len(longest_substring):
+                    longest_substring = candidate
+                
+        if longest_substring is not None:
+            # print(f"Substring: {longest_substring}")
+            # find index of the substring in the original text in terms of tokens
+            start_index = test_string.lower().find(longest_substring)
+            end_index = start_index + len(longest_substring)
+            # print(f"Start index: {start_index}, End index: {end_index}")
+            tmp.append((longest_substring, start_index, end_index))
+
+        return tmp
+    
+    def get_entities__check_actors(self, test_string, overlap_key, overlap_position_key, overlap_dict):
+        if overlap_key not in self.actors_by_two_letters:
+            return []
+        
+        longest_substring = None
+        tmp = []
+                
+        substrings = overlap_dict[overlap_position_key]
+        actor_candidates = self.actors_by_two_letters[overlap_key]
+        
+        # check if any substring is in the actors list
+        for substring in substrings:
+            if substring in actor_candidates:
+                if longest_substring is None or len(substring) > len(longest_substring):
+                    longest_substring = substring
+                
+        if longest_substring is not None:
+            # print(f"Substring: {longest_substring}")
+            # find index of the substring in the original text in terms of tokens
+            start_index = test_string.lower().find(longest_substring)
+            end_index = start_index + len(longest_substring)
+            # print(f"Start index: {start_index}, End index: {end_index}")
+            if longest_substring != 'you':
+                tmp.append((longest_substring, start_index, end_index))
+        
+        return tmp
+
     def get_entities(self, test_string):
         overlap_dict = self.get_all_token_sequences(test_string)
 
         genre_results = []
         substring_results = []
-        for overlap_key in overlap_dict:
-            overlap_start_key = overlap_dict[overlap_key][0][:2]
+        actor_results = []
+        for overlap_position_key in overlap_dict:
+            overlap_key = overlap_dict[overlap_position_key][0][:2]
 
-            if overlap_start_key in self.movies_by_two_letters:
-                longest_substring = None
-                
-                substrings = overlap_dict[overlap_key]
-                movie_candidates = self.movies_by_two_letters[overlap_start_key]
-                
-                # check if any substring is in the movies list
-                for substring in substrings:
-                    if substring in movie_candidates:
-                        if longest_substring is None or len(substring) > len(longest_substring):
-                            longest_substring = substring
-                        
-                if longest_substring is not None:
-                    # print(f"Substring: {longest_substring}")
-                    # find index of the substring in the original text in terms of tokens
-                    start_index = test_string.lower().find(longest_substring)
-                    end_index = start_index + len(longest_substring)
-                    # print(f"Start index: {start_index}, End index: {end_index}")
-                    substring_results.append((longest_substring, start_index, end_index))
+            substring_results.extend(
+                self.get_entities__check_movies(test_string, overlap_key, overlap_position_key, overlap_dict)
+            )
 
-            if overlap_start_key in self.genres_by_two_letters:
-                longest_substring = None
-                
-                substrings = overlap_dict[overlap_key]
-                genre_candidates = self.genres_by_two_letters[overlap_start_key]
-                
-                # check if any substring is in the genres list
-                for substring in substrings:
-                    substring_candidates = set([substring, f"{substring} film", f"{substring} story"])
-                    found_overlap = substring_candidates & set(genre_candidates)
+            genre_results.extend(
+                self.get_entities__check_genres(test_string, overlap_key, overlap_position_key, overlap_dict)
+            )
 
-                    for candidate in found_overlap:
-                        if longest_substring is None or len(candidate) > len(longest_substring):
-                            longest_substring = candidate
-                        
-                if longest_substring is not None:
-                    # print(f"Substring: {longest_substring}")
-                    # find index of the substring in the original text in terms of tokens
-                    start_index = test_string.lower().find(longest_substring)
-                    end_index = start_index + len(longest_substring)
-                    # print(f"Start index: {start_index}, End index: {end_index}")
-                    genre_results.append((longest_substring, start_index, end_index))
+            actor_results.extend(
+                self.get_entities__check_actors(test_string, overlap_key, overlap_position_key, overlap_dict)
+            )
 
         found_movies = self._cleanup_results(substring_results)
         found_genres = self._cleanup_results(genre_results)
-        return found_movies, found_genres
+        found_actors = self._cleanup_results(actor_results)
+        return found_movies, found_genres, found_actors
     
 
     def _cleanup_results(self, substring_results):
@@ -241,7 +340,7 @@ class SimpleRecommendationBot:
 
 
     def recommend_movies(self, test_string):
-        found_movies, found_genres = self.get_entities(test_string)
+        found_movies, found_genres, found_actors = self.get_entities(test_string)
 
         if len(found_movies) == 0 and len(found_genres) == 0:
             return "Hmm, I couldn't find any movies or genres in your query. Could you rephrase?"
