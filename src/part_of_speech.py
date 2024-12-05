@@ -137,7 +137,7 @@ class FactualBotPartOfSpeech:
                     return f"According to the graph, I think the answer is {result}."
 
         if not query_answered:
-            return "Could not find answer in graph"
+            return "Sorry, I checked everything but the graph did not give me an answer."
 
     def print_tree(self, question):
         doc = self.nlp(question)

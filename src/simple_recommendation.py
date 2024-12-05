@@ -1,5 +1,6 @@
 from .utils import *
 import jsonpickle
+import random
 
 
 class SimpleRecommendationBot:
@@ -14,7 +15,7 @@ class SimpleRecommendationBot:
         self._setup_year_groups()
         self._setup_movie_vectors()
         self._setup_actors_by_letter()
-
+   
 
     def _setup_year_groups(self):
         self.year_groups = []
@@ -103,6 +104,27 @@ class SimpleRecommendationBot:
 
         return tmp
 
+    def _extract_actor_images(self):
+        actor_images_path = 'dataset/processed/actor_images.json'
+        if os.path.exists(actor_images_path):
+            with open(actor_images_path, 'r') as ifile:
+                return jsonpickle.decode(ifile.read())
+            
+        with open('dataset/movienet/images.json', 'r') as f:
+            images = jsonpickle.decode(f.read())
+
+        actor2images = {}
+        for image_data in images:
+            for actor in image_data['cast']:
+                if actor not in actor2images:
+                    actor2images[actor] = []
+                actor2images[actor].append(image_data['img'].split('.')[0])
+        
+        with open(actor_images_path, 'w') as ofile:
+            ofile.write(jsonpickle.encode(actor2images))
+
+        return actor2images
+
     def _extract_data_from_graph(self):
         movie_genres_path = 'dataset/processed/movie_genres.json'
         if os.path.exists(movie_genres_path):
@@ -177,6 +199,7 @@ class SimpleRecommendationBot:
 
     def _setup_actors_by_letter(self):
         self.actors = self._extract_actors_from_graph()
+        self.actor_images = self._extract_actor_images()
 
         self.actors_by_two_letters = {}
         self.actor2id = {}
@@ -373,4 +396,21 @@ class SimpleRecommendationBot:
         return f"Let me think... Ah, yes. Have you tried watching: '{recommended_movies[0]}', '{recommended_movies[1]}' or maybe even '{recommended_movies[2]}'?"
 
     def show_images(self, test_string):
-        return ""
+        _, _, found_actors = self.get_entities(test_string)
+        
+        if len(found_actors) == 0:
+            return "I didn't find the actor you were looking for. Could you rephrase?"
+
+        actor = found_actors[0]
+        imdbId = self.actor2imdb[actor]
+
+        if imdbId in self.actor_images:
+            if len(self.actor_images[imdbId]) == 0:
+                return f"Sorry, I couldn't find any images for {actor}."
+            
+            random_image = random.choice(self.actor_images[imdbId])
+            return f"image:{random_image}"
+
+        else:
+            return f"Sorry, I couldn't find any images for {actor}."
+    
