@@ -371,3 +371,6 @@ class SimpleRecommendationBot:
             recommended_movies.append(self.movie_genres[movie_label]['full_name']) 
 
         return f"Let me think... Ah, yes. Have you tried watching: '{recommended_movies[0]}', '{recommended_movies[1]}' or maybe even '{recommended_movies[2]}'?"
+
+    def show_images(self, test_string):
+        return ""
