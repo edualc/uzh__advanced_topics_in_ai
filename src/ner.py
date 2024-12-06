@@ -290,6 +290,15 @@ class FactualBotNER(nn.Module):
                 reject_votes=0
             kappa = votes["kappa"].values[0]
             result = votes["Input3ID"].values[0]
+
+            try:
+                if votes["FixValue"].dropna().value_counts().reset_index()["count"][0]>support_votes:
+                    fixvalue = votes["FixValue"].dropna().value_counts().reset_index()["FixValue"][0]
+                    if "wd:" in result:result = "wd:" + fixvalue
+                    else: result = fixvalue
+            except:
+                pass
+
             if "wd:" in result:
                 result = 'http://www.wikidata.org/entity/'+result.split(":")[-1]
                 result = self.url2nodes[result]
@@ -297,7 +306,7 @@ class FactualBotNER(nn.Module):
             entity = self.url2nodes[matched_entity_url]
             predicate = self.url2nodes[matched_predicate_url]
 
-            answer = f"""The {predicate} of {entity} is {result}.\n[Crowd, inter-rater agreement {kappa:.4f}, The answer distribution for this specific was {support_votes} support votes, {reject_votes} reject votes]"""
+            answer = f"""The {predicate} of {entity} is {result}.[Crowd, inter-rater agreement {kappa:.4f}, The answer distribution for this specific was {support_votes} support votes, {reject_votes} reject votes]"""
         
         return answer
     

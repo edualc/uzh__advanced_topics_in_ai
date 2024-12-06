@@ -36,7 +36,9 @@ def load_crowd_data():
 
 def process_crowd_data(crowd_data):
     # discard malicious users (determined as approval rate <= %50 and WorkTimeInSeconds <=10)
+    # only object fixations
     processed_data = crowd_data[(crowd_data["LifetimeApprovalRate"]>"50%") & (crowd_data["WorkTimeInSeconds"]>10)]
+    processed_data = processed_data[(processed_data["FixPosition"]=="Object") | (processed_data["FixPosition"].isna())]
     # get number of tasks per batch
     tasks_per_batch = processed_data[["HITTypeId","HITId"]].drop_duplicates().groupby("HITTypeId").count().reset_index()
     tasks_per_batch.columns = ["HITTypeId","NumberofTasks"]
